@@ -1,25 +1,48 @@
 const CustomError = require("../extensions/custom-error");
 
 const chainMaker = {
-  getLength() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+  subArr: [],
+
+  deleteArr() {
+    this.subArr = []
   },
-  addLink(value) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+  
+  getLength() {
+    return this.subArr.length;
+  },
+  addLink(a = ' ') {
+    
+      this.subArr.push(`${a}`)
+      return this
+  
   },
   removeLink(position) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if((position ^ 0) !== position || position < 1 || typeof(position) !== 'number' || position > this.subArr.length) {
+      this.deleteArr()
+      throw new Error;
+    }
+    else {
+      this.subArr.splice(position - 1, 1)
+      return this
+    }
   },
   reverseChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    this.subArr.reverse()
+    return this
   },
   finishChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    let result = '';
+    if (this.subArr.length === 1) {
+      result = `( ${this.subArr[0]} )`
+    } else if (this.subArr.length > 1) {
+      for (let i = 0; i < this.subArr.length -1; i++) {
+        result += `( ${this.subArr[i]} )~~`;
+      }
+      result += `( ${this.subArr[this.subArr.length-1]} )`
+    }
+   
+    this.deleteArr()
+    return `${result}`;
   }
 };
 
